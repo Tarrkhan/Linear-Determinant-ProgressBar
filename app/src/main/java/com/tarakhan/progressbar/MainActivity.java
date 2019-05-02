@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     Handler handler;
     Runnable runnable;
     Timer timer;
+    int i =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +23,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         progressBar = findViewById(R.id.ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(0);
+        progressBar.setSecondaryProgress(0);
+        progressBar.setMax(100);
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
 
-                timer.cancel();
-                progressBar.setVisibility(View.INVISIBLE);
+                if (++i<=100)
+                {
+                    progressBar.setProgress(i);
+                    progressBar.setSecondaryProgress(i+10);
+                }else {
+                    timer.cancel();
+
+                }
+
+
             }
         };
         timer = new Timer();
@@ -38,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                 handler.post(runnable);
             }
-        },8000,1000);
+        },8000,300);
 
     }
 }
